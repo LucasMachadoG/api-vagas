@@ -6,7 +6,7 @@ export class Server {
         const app = createApp()
 
         app.listen (ServerEnv.port, () => {
-            console.log("A API esta rodando...")
+            console.log("Server is running")
         })
     }
 }
