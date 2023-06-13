@@ -5,16 +5,17 @@ import { UsuarioEntity } from "../../../shared/database/entities/usuario.entity"
 export class UsuarioRepository {
     private repository = typeormConnection.connection.getRepository(UsuarioEntity)
 
-    public async getByUsername (username: string): Promise<Usuario | null> {
-        const result = await this.repository.findOneBy ({
-            username
+    public async getByUsername (username: string, password?: string): Promise<Usuario | null> {
+        const result = await this.repository.findOneBy({
+            username,
+            password
         })
 
         if (!result) {
             return null
         }
 
-        return this.mapEntittyToModel(result)
+        return UsuarioRepository.mapEntittyToModel(result)
     }
 
     public async list (tipo?: TipoUsuario) {
@@ -22,7 +23,7 @@ export class UsuarioRepository {
             tipo
         })
 
-        return result.map((item) => this.mapEntittyToModel(item))
+        return result.map((item) => UsuarioRepository.mapEntittyToModel(item))
     }
 
     public async create (usuario: Usuario) {
@@ -37,11 +38,10 @@ export class UsuarioRepository {
 
         const result = await this.repository.save(usuarioEntity)
 
-        return this.mapEntittyToModel(result)
-
+        return UsuarioRepository.mapEntittyToModel(result)
     }
 
-    private mapEntittyToModel (entity: UsuarioEntity): Usuario {
+    public static mapEntittyToModel (entity: UsuarioEntity): Usuario {
         return Usuario.create(
             entity.id,
             entity.nome,
@@ -50,5 +50,17 @@ export class UsuarioRepository {
             entity.tipo,
             entity.nomeEmpresa
         )
+    }
+
+    public async getById(id: string): Promise<Usuario | null> {
+        const result = await this.repository.findOneBy({
+            id
+        })
+
+        if (!result) {
+            return null
+        }
+
+        return UsuarioRepository.mapEntittyToModel(result)
     }
 }

@@ -5,5 +5,6 @@ export const databaseEnv = {
     username: process.env.DB_USER,
     host: process.env.DB_HOST,
     password: process.env.DB_PASS,
-    database: process.env.DB_NAME
+    database: process.env.DB_NAME,
+    nodeEnv: process.env.NODE_ENV
 }

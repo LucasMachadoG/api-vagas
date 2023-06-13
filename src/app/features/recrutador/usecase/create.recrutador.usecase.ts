@@ -12,7 +12,7 @@ interface createRecrutadoParams {
 export class createRecrutadorUsecase {
     public async execute (data: createRecrutadoParams): Promise<Return> {
         const repository = new UsuarioRepository()
-        const usuario = repository.getByUsername(data.username)
+        const usuario = await repository.getByUsername(data.username)
 
         if (usuario !== null) {
             return {

@@ -24,7 +24,7 @@ export class UsuarioEntity {
     @Column({
         type: "varchar",
         length: 1,
-        enum: TipoUsuario
+        enum: ["A", "R", "C"]
     })
     tipo: TipoUsuario
 
